@@ -1,0 +1,35 @@
+<!--
+ - Created by mburnside on 27/2/18.
+ -->
+
+<aura:component description="BCContractItem">
+
+
+    <aura:attribute name="contract" type="BCContract2__x"/>
+
+
+
+
+        <p class="slds-p-horizontal--small">ContractId: {!v.contract.ExternalId}
+        </p>
+        <p class="slds-p-horizontal--small">Grower: {!v.contract.grower__c}
+        </p>
+        <p class="slds-p-horizontal--small">Importer: {!v.contract.importer__c}
+        </p>
+    <p class="slds-p-horizontal--small">Unit Price: {!v.contract.unitPrice__c}
+    </p>
+
+    <p class="slds-p-horizontal--small">Arrival: {!v.contract.arrivalDateTime__c}
+    </p>
+    <p class="slds-p-horizontal--small">Min Temp: {!v.contract.minTemperature__c}
+    </p>
+    <p class="slds-p-horizontal--small">Max Temp: {!v.contract.maxTemperature__c}
+    </p>
+
+
+
+
+
+
+
+</aura:component>

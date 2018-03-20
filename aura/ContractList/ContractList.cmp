@@ -1,0 +1,87 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="BCContractController">
+
+
+    <aura:attribute name="contracts" type="BCContract2__x[]" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:ShipmentEvent" action="{!c.handleMyShipmentEvent}" />
+    <lightning:card title="Contract" iconName="standard:account">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Contract">Contract</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Importer">Importer</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Grower">Grower</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="unitprice">Price</div>
+                    </th>
+                     <th scope="col">
+                        <div class="slds-truncate" title="arrival">Arrival</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Max Temp">MaxTemp</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Min Temp">MinTemp</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Min Penalty">Min Pen.</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Max Penalty">Max Pen.</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <aura:iteration items="{!v.contracts}" var="contract">
+
+                    <tr>
+
+                        <td data-label="Contract">
+                            <div class="slds-truncate" title="Contract">{!contract.ExternalId} </div>
+                        </td>
+
+                        <td data-label="Importer">
+                            <div class="slds-truncate" title="Max">{!contract.importer__c}</div>
+                        </td>
+
+                        <td data-label="Grower">
+                            <div class="slds-truncate" title="Grower">{!contract.grower__c} </div>
+                        </td>
+
+                        <td data-label="Importer">
+                            <div class="slds-truncate" title="Price">{!contract.unitPrice__c}</div>
+                        </td>
+                        <td data-label="Importer">
+                            <div class="slds-truncate" title="Arrival">{!contract.arrivalDateTime__c}</div>
+                        </td>
+
+                        <td data-label="Max">
+                            <div class="slds-truncate" title="Max">{!contract.maxTemperature__c}</div>
+                        </td>
+                        <td data-label="Min">
+                            <div class="slds-truncate" title="Min">{!contract.minTemperature__c}</div>
+                        </td>
+                         <td data-label="Min">
+                            <div class="slds-truncate" title="Min Penalty">{!contract.minPenaltyFactor__c}</div>
+                        </td>
+                         <td data-label="Min">
+                            <div class="slds-truncate" title="Max Penalty">{!contract.maxTemperature__c}</div>
+                        </td>
+
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+
+    </lightning:card>
+
+
+</aura:component>

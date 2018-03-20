@@ -1,0 +1,51 @@
+<aura:component controller="BCUtility" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="status" type="String" default="Careful!"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
+
+    <!-- NEW Contract2 FORM -->
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small" size="6">
+
+            <!-- CREATE NEW EXPENSE -->
+            <div aria-labelledby="newcontractform">
+
+
+                <aura:if isTrue="{!v.Spinner}">
+                    <div aura:id="spinnerId" class="slds-spinner_container">
+                        <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </aura:if>
+
+
+                <!-- CREATE NEW Contract2 FORM -->
+                <form aura:id="theForm"  class="slds-form--stacked">
+
+
+
+                    <lightning:button label="DELETE ALL BC ENTRIES - CAUTION!!"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.handleClick}"/>
+
+
+                </form>
+                <!-- / CREATE NEW EXPENSE FORM -->
+
+                <!-- / BOXED AREA -->
+
+            </div>
+            <!-- / CREATE NEW EXPENSE -->
+
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW EXPENSE FORM -->
+
+</aura:component>

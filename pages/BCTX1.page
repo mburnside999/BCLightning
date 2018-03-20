@@ -1,0 +1,28 @@
+<apex:page standardController="BCShipment__x" extensions="MBBCExtensions" >
+  <!-- Begin Default Content REMOVE THIS -->
+  <apex:form >
+  <apex:pageblock >
+  <apex:pageBlockButtons >
+  <apex:commandButton action="{!receiveShipment}" value="ReceiveShipment"/>
+  
+  </apex:pageBlockButtons>
+  
+    <apex:pageblocksection title="Shipment">
+          <apex:outputText value="{!BCShipment__x.ExternalId}"/>
+          <apex:outputText value="{!BCShipment__x.type__c}"/>
+           <apex:outputText value="{!BCShipment__x.status__c}"/>
+           <apex:outputText value="{!BCShipment__x.unitCount__c}"/>
+          <apex:outputText value="{!BCShipment__x.class__c}"/>
+
+</apex:pageblocksection>
+  <apex:pageblocksection title="Debug">
+          <apex:outputText value="{!debug}"/>
+</apex:pageblocksection>
+  </apex:pageblock>
+  
+  
+  
+  </apex:form>
+  
+{!BCShipment__x.ExternalId}
+</apex:page>

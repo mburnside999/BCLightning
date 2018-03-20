@@ -1,0 +1,111 @@
+<aura:component controller="BCShipperController" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+<aura:attribute name="shippers" type="BCShipper__x[]"/>
+
+<aura:attribute name="recordId" type="Id" />
+
+<aura:attribute name="record" type="Account"/>
+<aura:attribute name="simpleRecord" type="Account"/>
+<aura:attribute name="recordError" type="String"/>
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+<force:recordData aura:id="recordLoader"
+                  recordId="{!v.recordId}"
+                  layoutType="FULL"
+                  targetRecord="{!v.record}"
+                  targetFields="{!v.simpleRecord}"
+                  targetError="{!v.recordError}"
+                  recordUpdated="{!c.handleRecordUpdated}"
+/>
+
+<aura:attribute name="country" type="String" default="Zambia"/>
+
+
+<aura:attribute name="newShipper" type="BCShipper__x"
+                default="{ 'sobjectType': 'BCShipper__x',
+                        'accountPK__c': '12345',
+                        'city__c': 'Melbourne',
+                        'country__c':'Australia',
+                        'email__c':'test@test.com',
+                        'street__c': 'Main St',
+                        'accountBalance__c':'1000'
+                        }"/>
+
+<!-- PAGE HEADER -->
+
+
+<lightning:layout class="slds-page-header slds-page-header--object-home">
+    <lightning:layoutItem >
+        <lightning:icon iconName="standard:account" alternativeText="My Shippers"/>
+    </lightning:layoutItem>
+    <lightning:layoutItem padding="horizontal-small">
+        <div class="page-section page-header">
+            <h1 class="slds-text-heading--label">Shippers</h1>
+            <h2 class="slds-text-heading--medium">Add Shipper</h2>
+        </div>
+    </lightning:layoutItem>
+</lightning:layout>
+<!-- / PAGE HEADER -->
+
+<!-- NEW Shipper FORM -->
+<lightning:layout >
+    <lightning:layoutItem padding="around-small" size="6">
+
+        <!-- CREATE NEW EXPENSE -->
+        <div aria-labelledby="newshipperform">
+
+            <!-- BOXED AREA -->
+
+
+
+            <!-- CREATE NEW Shipper FORM -->
+            <form aura:id="theForm"  class="slds-form--stacked">
+
+                <lightning:input aura:id="shipperform" label="accountPK"
+                                 name="accountPK"
+                                 value="{!v.newShipper.accountPK__c}"
+                />
+                
+                <lightning:input aura:id="shipperform" label="comanyName"
+                                 name="companyName"
+                                 value="{!v.newShipper.companyName__c}"
+                />
+                <lightning:input aura:id="shipperform" label="Billing Street"
+                                 name="shipperbillingcstreet"
+                                 value="{!v.newShipper.street__c}"
+                />
+
+                <lightning:input aura:id="shipperform" label="Billing City"
+                                 name="shipperbillingcity"
+                                 value="{!v.newShipper.city__c}"
+                />
+
+                <lightning:input aura:id="shipperform" label="Billing Country"
+                                 name="shipperbillingcountry"
+                                 value="{!v.newShipper.country__c}"/>
+
+
+
+                <lightning:input aura:id="shipperform" label="Balance"
+                                 type="number" name="shippercountry"
+                                 value="{!v.newShipper.accountBalance__c}"
+                                 placeholder="1000"/>
+
+
+                <lightning:button label="Create Shipper"
+                                  class="slds-m-top--medium"
+                                  variant="brand"
+                                  onclick="{!c.clickCreate}"/>
+            </form>
+            <!-- / CREATE NEW EXPENSE FORM -->
+
+            <!-- / BOXED AREA -->
+
+        </div>
+        <!-- / CREATE NEW EXPENSE -->
+
+    </lightning:layoutItem>
+</lightning:layout>
+<!-- / NEW EXPENSE FORM -->
+
+</aura:component>

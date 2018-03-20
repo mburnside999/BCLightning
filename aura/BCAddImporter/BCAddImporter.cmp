@@ -1,0 +1,111 @@
+<aura:component controller="BCImporterController" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="Importers" type="BCImporter__x[]"/>
+
+    <aura:attribute name="recordId" type="Id" />
+
+    <aura:attribute name="record" type="Account"/>
+    <aura:attribute name="simpleRecord" type="Account"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+    />
+
+    <aura:attribute name="country" type="String" default="Zambia"/>
+
+
+    <aura:attribute name="newImporter" type="BCImporter__x"
+                    default="{ 'sobjectType': 'BCImporter__x',
+                        'accountPK__c': '12345',
+                        'city__c': 'Melbourne',
+                        'country__c':'Australia',
+                        'email__c':'test@test.com',
+                        'street__c': 'Main St',
+                        'accountBalance__c':'1000'
+                        }"/>
+
+    <!-- PAGE HEADER -->
+
+
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem >
+            <lightning:icon iconName="standard:account" alternativeText="My Importers"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Importers</h1>
+                <h2 class="slds-text-heading--medium">Add Importer</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+
+    <!-- NEW Importer FORM -->
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small" size="6">
+
+            <!-- CREATE NEW EXPENSE -->
+            <div aria-labelledby="newImporterform">
+
+                <!-- BOXED AREA -->
+
+               
+
+
+                <!-- CREATE NEW Importer FORM -->
+                <form aura:id="theForm"  class="slds-form--stacked">
+
+                    <lightning:input aura:id="importerform" label="accountPK"
+                                     name="accountPK"
+                                     value="{!v.newImporter.accountPK__c}"
+                    />
+                    <lightning:input aura:id="importerform" label="companyName"
+                                     name="companyName"
+                                     value="{!v.newImporter.companyName__c}"
+                    />
+                    <lightning:input aura:id="importerform" label="Billing Street"
+                                     name="importerbillingcstreet"
+                                     value="{!v.newImporter.street__c}"
+                    />
+
+                    <lightning:input aura:id="importerform" label="Billing City"
+                                     name="importerbillingcity"
+                                     value="{!v.newImporter.city__c}"
+                    />
+
+                    <lightning:input aura:id="importerform" label="Billing Country"
+                                     name="importerbillingcountry"
+                                     value="{!v.newImporter.country__c}"/>
+
+
+
+                    <lightning:input aura:id="Importerform" label="Balance"
+                                     type="number" name="Importercountry"
+                                     value="{!v.newImporter.accountBalance__c}"
+                                     placeholder="1000"/>
+
+
+                    <lightning:button label="Create Importer"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.clickCreate}"/>
+                </form>
+                <!-- / CREATE NEW EXPENSE FORM -->
+
+                <!-- / BOXED AREA -->
+
+            </div>
+            <!-- / CREATE NEW EXPENSE -->
+
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW EXPENSE FORM -->
+
+</aura:component>

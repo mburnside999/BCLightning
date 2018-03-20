@@ -1,0 +1,29 @@
+<apex:page standardcontroller="Account" extensions="BlockChainControllerExt">
+  <!-- Begin Default Content REMOVE THIS -->
+<apex:form id="changeStatusForm">
+        <apex:pageBlock >
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Save" action="{!addImporter}"/>
+        </apex:pageBlockButtons>
+        <apex:pageMessages />
+        <apex:pageblocksection >
+        
+       
+        <apex:outputField value="{!account.name}"/>
+        <apex:outputField value="{!account.id}"/>
+       <apex:outputField value="{!account.billingstreet}"/>
+         <apex:outputField value="{!account.billingcountry}"/>
+          <apex:outputField value="{!account.billingpostalcode}"/>
+            <apex:outputField value="{!account.BlockChainClass__c}"/>
+         
+        
+  
+
+       </apex:pageblocksection>
+       <apex:pageblocksection title="Debug">
+          <apex:outputText value="{!debug}"/>
+</apex:pageblocksection>
+       
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

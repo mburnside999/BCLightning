@@ -1,0 +1,73 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes, force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="BCShipmentController">
+
+    <aura:attribute name="shipments" type="BCShipment__x[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="myShipmentEvent" type="c:ShipmentEvent"/>
+
+    <lightning:card title="BlockChain Shipments" iconName="custom:custom54">
+
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+            <tr class="slds-text-title_caps">
+
+                <th scope="col">
+                    <div class="slds-truncate" title="ShipmentID">ShipmentID</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Contract">Contract</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Status">Status</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Type">Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Type">Units</div>
+                </th>
+                <th scope="col">
+
+                </th>
+
+            </tr>
+
+            </thead>
+            <tbody>
+
+            <aura:iteration items="{!v.shipments}" var="shipment">
+
+                <tr>
+
+                    <td data-label="ExternalId" data-record="{!shipment.ExternalId}" onclick ="{!c.fireShipmentEvent }"  >
+                        <div class="slds-truncate" title="Status">{!shipment.ExternalId}</div>
+                    </td>
+
+                    <td data-label="Contract">
+                        <div class="slds-truncate" title="Contract">{!shipment.contract__c}</div>
+                    </td>
+                    <td data-label="Status">
+                        <div class="slds-truncate" title="Status">{!shipment.status__c}</div>
+                    </td>
+                    <td data-label="Type">
+                        <div class="slds-truncate" title="Type">{!shipment.type__c}</div>
+                    </td>
+                    <td data-label="Type">
+                        <div class="slds-truncate" title="Units">{!shipment.unitCount__c}</div>
+                    </td>
+                    <td data-label="Type">
+                        <aura:if isTrue="{!shipment.status__c=='IN_TRANSIT'}">
+                            <button data-label="SupplierID" data-record="{!shipment.ExternalId}"  onclick="{!c.shipmentReceived }">Receive</button>
+
+                        </aura:if>
+                    </td>
+                </tr>
+            </aura:iteration>
+
+            </tbody>
+        </table>
+
+
+    </lightning:card>
+
+
+</aura:component>

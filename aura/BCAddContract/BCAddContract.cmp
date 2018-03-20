@@ -1,0 +1,140 @@
+<aura:component controller="BCContractController" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="contracts" type="BCContract2__x[]"/>
+
+    <aura:attribute name="recordId" type="Id" />
+
+    <aura:attribute name="record" type="Account"/>
+    <aura:attribute name="simpleRecord" type="Account"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+    />
+
+    <aura:attribute name="country" type="String" default="Zambia"/>
+
+
+    <aura:attribute name="newContract" type="BCContract2__x"
+                    default="{ 'sobjectType': 'BCContract2__x',
+                        'accountPK__c': '12345',
+                        'city__c': 'Melbourne',
+                        'country__c':'Australia',
+                        'email__c':'test@test.com',
+                        'street__c': 'Main St',
+                        'accountBalance__c':'1000'
+                        }"/>
+
+    <!-- PAGE HEADER -->
+
+
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem >
+            <lightning:icon iconName="standard:account" alternativeText="My Contract2s"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Contracts</h1>
+                <h2 class="slds-text-heading--medium">Add Contract2</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+
+    <!-- NEW Contract2 FORM -->
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small" size="6">
+
+            <!-- CREATE NEW EXPENSE -->
+            <div aria-labelledby="newcontractform">
+
+                <!-- BOXED AREA -->
+
+                <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Account">
+                    <div class="slds-box slds-theme_default">
+                        <lightning:outputField fieldName="Id" />
+                        <lightning:outputField fieldName="Name" />
+                        <lightning:outputField fieldName="Importer__c" />
+                        <lightning:outputField fieldName="Shipper__c" />
+                        <lightning:outputField fieldName="Grower__c" />
+
+
+
+                    </div>
+                </lightning:recordViewForm>
+
+
+
+                <!-- CREATE NEW Contract2 FORM -->
+                <form aura:id="theForm"  class="slds-form--stacked">
+
+                    <lightning:input aura:id="contractform" label="ContractID"
+                                     name="contractId"
+                                     value="{!v.newContract.ExternalId}"
+                    />
+                    <lightning:input aura:id="contractform" label="Grower"
+                                     name="contractgrower"
+                                     value="{!v.newContract.grower__c}"
+                    />
+
+                    <lightning:input aura:id="contractform" label="Importer"
+                                     name="contractimporter"
+                                     value="{!v.newContract.importer__c}"
+                    />
+                    <lightning:input aura:id="contractform" label="Shipper"
+                                     name="contractshipper"
+                                     value="{!v.newContract.shipper__c}"
+                    />
+                    <lightning:input aura:id="contractform" label="Arrival"
+                                     name="contractarrivaldatetime"
+                                     value="{!v.newContract.arrivalDateTime__c}"
+                    />
+
+                    <lightning:input aura:id="contractform" label="Min Temp"
+                                     name="contractminTemp"
+                                     value="{!v.newContract.minTemperature__c}"/>
+
+                    <lightning:input aura:id="contractform" label="Max Temp"
+                                     name="contractmaxTemp"
+                                     value="{!v.newContract.maxTemperature__c}"/>
+
+                    <lightning:input aura:id="contractform" label="Min Penalty"
+                                     name="minPenaltyFactor"
+                                     value="{!v.newContract.minPenaltyFactor__c}"/>
+
+
+                    <lightning:input aura:id="contractform" label="Max Penalty"
+                                     name="maxpenaltyfactor"
+                                     value="{!v.newContract.maxPenaltyFactor__c}"/>
+
+
+
+                    <lightning:input aura:id="contractform" label="Unit Price"
+                                     type="number" name="contractunitprice"
+                                     value="{!v.newContract.unitPrice__c}"
+                                     placeholder="10.00"/>
+
+
+                    <lightning:button label="Create Contract"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.clickCreate}"/>
+                </form>
+                <!-- / CREATE NEW EXPENSE FORM -->
+
+                <!-- / BOXED AREA -->
+
+            </div>
+            <!-- / CREATE NEW EXPENSE -->
+
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW EXPENSE FORM -->
+
+</aura:component>

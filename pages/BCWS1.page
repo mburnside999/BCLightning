@@ -1,0 +1,33 @@
+<apex:page >
+
+<head>
+    <title>Web socket Experiment</title>
+    <script type="text/javascript">
+        function callWebSocket() {
+
+
+            var socket = new WebSocket("ws://cap-au-sg-prd-01.integration.ibmcloud.com:15158");
+
+            socket.onopen = function () {
+                alert("Hello, Connected To WS server");
+            };
+
+            socket.onmessage = function (e) {
+                alert("The message received is : " + e.data);
+            };
+            socket.onerror = function (e) {
+                alert("An error occured while connecting... " + e.data);
+            };
+            socket.onclose = function () {
+                alert("hello.. The coonection has been clsoed");
+            };
+
+        }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="Open Connecton" onclick="callWebSocket()" />
+</body>
+
+</apex:page>

@@ -1,0 +1,56 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="BCContractController">
+
+
+<aura:attribute name="contracts" type="BCContract2__x[]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:ShipmentEvent" action="{!c.handleMyShipmentEvent}"/>
+
+
+    <lightning:card title="BlockChain Contract" iconName="standard:account">
+    <!--<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="AccountPK">AccountPK</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Balance">Balance</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="City">City</div>
+                </th>
+                 <th scope="col">
+                    <div class="slds-truncate" title="Country">Country</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>  -->
+    <aura:iteration items="{!v.contracts}" var="contract">
+
+        <c:BCContractItem contract="{!contract}"/>
+
+        <!--<tr>
+                    <td data-label="accountpk">
+                        <div class="slds-truncate" title="Contract">{!grower. ExternalId}  </div>
+                    </td>
+                    <td data-label="Grower">
+                        <div class="slds-truncate" title="Grower">{!grower.accountBalance__c}  </div>
+                    </td>
+                     <td data-label="City">
+                        <div class="slds-truncate" title="City">{!grower.city__c}  </div>
+                    </td>
+                     <td data-label="Country">
+                        <div class="slds-truncate" title="Grower">{!grower.country__c}  </div>
+                    </td>
+                </tr>
+                -->
+    </aura:iteration>
+    <!--</tbody>
+</table> -->
+
+
+    </lightning:card>
+
+
+</aura:component>

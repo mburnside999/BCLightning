@@ -1,0 +1,47 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="BCTempReadingController">
+
+    <aura:attribute name="temperaturereadings" type="BCTempReading__x[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:ShipmentEvent" action="{!c.handleMyShipmentEvent}"/>
+       <lightning:card title="BlockChain Temperature Readings" iconName="custom:custom97">
+       
+<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+  <thead>
+    <tr class="slds-text-title_caps">
+     <th scope="col">
+        <div class="slds-truncate" title="Shipment">Shipment</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Timestamp">Timestamp</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Temperature">Temp</div>
+      </th> 
+    </tr>
+  </thead>
+  <tbody>          
+       
+        <aura:iteration items="{!v.temperaturereadings}" var="temperaturereading">
+          
+              <tr>
+     
+      <td data-label="Shipment">
+        <div class="slds-truncate" title="Shipment">{!temperaturereading.shipmentFK__c}</div>
+      </td>
+       <td data-label="Timestamp">
+        <div class="slds-truncate" title="Timestamp">{!temperaturereading.timestamp__c}</div>
+      </td>
+      <td data-label="Temperature">
+        <div class="slds-truncate" title="Temp">{!temperaturereading.centigrade__c}</div>
+      </td>
+            
+            </tr>
+       </aura:iteration>
+      
+      </tbody>
+</table>        
+        
+        
+    
+    </lightning:card>
+</aura:component>

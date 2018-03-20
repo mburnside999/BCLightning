@@ -1,0 +1,41 @@
+<!--
+ - Created by mburnside on 27/2/18.
+ -->
+
+<aura:component description="BCGrowerItem">
+
+
+    <aura:attribute name="grower" type="BCGrower__x"/>
+
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="record" type="Account"/>
+    <aura:attribute name="simpleRecord" type="Account"/>
+    <aura:attribute name="recordError" type="String"/>
+
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+    />
+
+
+
+    <p class="slds-p-horizontal--small">Grower Account: {!v.grower.ExternalId}</p>
+    <p class="slds-p-horizontal--small">Name: {!v.simpleRecord.Name}</p>
+    <p class="slds-p-horizontal--small">Balance:
+        <lightning:formattedNumber value="{!v.grower.accountBalance__c}" style="currency"/></p>
+    <p class="slds-p-horizontal--small">Street: {!v.grower.street__c}</p>
+    <p class="slds-p-horizontal--small">City: {!v.grower.city__c}</p>
+    <p class="slds-p-horizontal--small">Country: {!v.grower.country__c}</p>
+
+
+
+
+
+
+
+</aura:component>

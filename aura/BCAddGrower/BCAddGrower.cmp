@@ -1,0 +1,104 @@
+<aura:component controller="BCGrowerController" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="growers" type="BCGrower__x[]"/>
+
+    <aura:attribute name="recordId" type="Id" />
+
+    <aura:attribute name="record" type="Account"/>
+    <aura:attribute name="simpleRecord" type="Account"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+    />
+
+    <aura:attribute name="newGrower" type="BCGrower__x"
+         default="{ 'sobjectType': 'BCGrower__x',
+                        'accountPK__c': '12345',
+                        'city__c': 'Melbourne',
+                        'country__c':'Australia',
+                        'email__c':'test@test.com',
+                        'street__c': 'Main St',
+                        'accountBalance__c':'1000'
+                        }"/>
+
+
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem >
+            <lightning:icon iconName="standard:account" alternativeText="My Growers"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Growers</h1>
+                <h2 class="slds-text-heading--medium">Add Grower</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+
+    <!-- NEW Grower FORM -->
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small" size="6">
+
+           <!-- CREATE NEW EXPENSE -->
+    <div aria-labelledby="newgrowerform">
+
+        <!-- BOXED AREA -->
+
+
+            <!-- CREATE NEW Grower FORM -->
+        <form aura:id="theForm"  class="slds-form--stacked">
+
+            <lightning:input aura:id="growerform" label="accountPK"
+                             name="accountPK"
+                             value="{!v.newGrower.accountPK__c}"
+                             />
+            <lightning:input aura:id="growerform" label="companyName"
+                             name="companyName"
+                             value="{!v.newGrower.companyName__c}"
+            />
+            <lightning:input aura:id="growerform" label="Billing Street"
+                             name="growerbillingcstreet"
+                             value="{!v.newGrower.street__c}"
+                             />
+
+            <lightning:input aura:id="growerform" label="Billing City"
+                             name="growerbillingcity"
+                             value="{!v.newGrower.city__c}"
+                             />
+
+            <lightning:input aura:id="growerform" label="Billing Country"
+                             name="growerbillingcountry"
+                             value="{!v.newGrower.country__c}"/>
+
+
+
+            <lightning:input aura:id="growerform" label="Balance"
+                             type="number" name="growercountry"
+                             value="{!v.newGrower.accountBalance__c}" 
+                             placeholder="1000"/>
+
+            
+            <lightning:button label="Create Grower" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.clickCreate}"/>
+        </form>
+        <!-- / CREATE NEW EXPENSE FORM -->
+  
+      <!-- / BOXED AREA -->
+
+    </div>
+    <!-- / CREATE NEW EXPENSE -->
+
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW EXPENSE FORM -->
+
+</aura:component>

@@ -1,0 +1,101 @@
+<aura:component controller="BCShipmentController" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+    <aura:attribute name="shipments" type="BCShipment__x[]"/>
+
+    <aura:attribute name="recordId" type="Id" />
+
+    <aura:attribute name="record" type="OrderItem"/>
+    <aura:attribute name="simpleRecord" type="OrderItem"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+    />
+
+    <aura:attribute name="country" type="String" default="Zambia"/>
+
+++{!v.record.Product2.ProductCode}+++
+    <aura:attribute name="newShipment" type="BCShipment__x"
+                    default="{ 'sobjectType': 'BCShipment__x',
+                        'shipmentId__c': '12345',
+                        'type__c': 'BANANAS',
+                        'status__c':'CREATED',
+                        'contract_c':'XX',
+                        'unitCount__c':'10'
+                        }"/>
+
+    <!-- PAGE HEADER -->
+
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem >
+            <lightning:icon iconName="custom:custom54" alternativeText="My Contract2s"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Shipments</h1>
+                <h2 class="slds-text-heading--medium">Create a BlockChain Shipment</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+
+    <!-- NEW Contract2 FORM -->
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small" size="6">
+
+            <!-- CREATE NEW EXPENSE -->
+            <div aria-labelledby="newcontractform">
+
+                <!-- BOXED AREA -->
+
+
+                <!-- CREATE NEW Contract2 FORM -->
+                <form aura:id="theForm"  class="slds-form--stacked">
+
+                    <lightning:input aura:id="shipmentform" label="Blockchain Shipment"
+                                     name="shipmentId"
+                                     value="{!v.newShipment.shipmentId__c}"
+                    />
+                    <lightning:input aura:id="shipmentform" label="Type"
+                                     name="shipmenttype"
+                                     value="{!v.newShipment.type__c}"
+                    />
+
+                    <lightning:input aura:id="shipmentform" label="Unit Count"
+                                     name="shipmentimporter"
+                                     value="{!v.newShipment.unitCount__c}"
+                    />
+                    <lightning:input aura:id="shipmentform" label="Status"
+                                     name="contractshipper"
+                                     value="{!v.newShipment.status__c}"
+                    />
+
+                    <lightning:input aura:id="shipmentform" label="Contract"
+                                     name="contract"
+                                     value="{!v.newShipment.contract__c}"
+                    />
+
+
+                    <lightning:button label="Create Blockchain Shipment"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.clickCreate}"/>
+                </form>
+                <!-- / CREATE NEW EXPENSE FORM -->
+
+                <!-- / BOXED AREA -->
+
+            </div>
+            <!-- / CREATE NEW EXPENSE -->
+
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW EXPENSE FORM -->
+
+</aura:component>
