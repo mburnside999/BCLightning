@@ -1,5 +1,8 @@
-<aura:component controller="BCShipmentController" implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+<aura:component controller="BCShipmentController" implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
     <aura:attribute name="shipments" type="BCShipment__x[]"/>
+
+    <aura:attribute name="shipmentInBlockChain" type="BCShipment__x"/>
+
 
     <aura:attribute name="recordId" type="Id" />
 
@@ -20,7 +23,6 @@
 
     <aura:attribute name="country" type="String" default="Zambia"/>
 
-++{!v.record.Product2.ProductCode}+++
     <aura:attribute name="newShipment" type="BCShipment__x"
                     default="{ 'sobjectType': 'BCShipment__x',
                         'shipmentId__c': '12345',
@@ -32,6 +34,7 @@
 
     <!-- PAGE HEADER -->
 
+
     <lightning:layout class="slds-page-header slds-page-header--object-home">
         <lightning:layoutItem >
             <lightning:icon iconName="custom:custom54" alternativeText="My Contract2s"/>
@@ -39,7 +42,7 @@
         <lightning:layoutItem padding="horizontal-small">
             <div class="page-section page-header">
                 <h1 class="slds-text-heading--label">Shipments</h1>
-                <h2 class="slds-text-heading--medium">Create a BlockChain Shipment</h2>
+                <h2 class="slds-text-heading--medium">BlockChain Shipment</h2>
             </div>
         </lightning:layoutItem>
     </lightning:layout>
@@ -56,7 +59,10 @@
 
 
                 <!-- CREATE NEW Contract2 FORM -->
-                <form aura:id="theForm"  class="slds-form--stacked">
+                <aura:if isTrue="{!v.shipmentInBlockChain.ExternalId == null}">
+                    <!-- does not exist in BC -->
+
+                    <form aura:id="theForm"  class="slds-form--stacked">
 
                     <lightning:input aura:id="shipmentform" label="Blockchain Shipment"
                                      name="shipmentId"
@@ -82,11 +88,69 @@
                     />
 
 
-                    <lightning:button label="Create Blockchain Shipment"
+
+                        <lightning:button label="Create Blockchain Shipment"
+                                          class="slds-m-top--medium"
+                                          variant="brand"
+                                          onclick="{!c.clickCreate}"/>
+
+
+                </form>
+                </aura:if>
+
+
+                <aura:if isTrue="{!v.shipmentInBlockChain.ExternalId != null}">
+                    <!-- exists in BC -->
+
+
+                <form aura:id="theForm"  class="slds-form--stacked">
+
+                    <lightning:input aura:id="shipmentform" label="Blockchain Shipment"
+                                     name="shipmentId" disabled="true"
+                                     value="{!v.shipmentInBlockChain.shipmentId__c}"
+                    />
+                    <lightning:input aura:id="shipmentform" label="Type"
+                                     name="shipmenttype" disabled="true"
+                                     value="{!v.shipmentInBlockChain.type__c}"
+                    />
+
+                    <lightning:input aura:id="shipmentform" label="Unit Count"
+                                     name="shipmentimporter" disabled="true"
+                                     value="{!v.shipmentInBlockChain.unitCount__c}"
+                    />
+                    <lightning:input aura:id="shipmentform" label="Status"
+                                     name="contractshipper" disabled="true"
+                                     value="{!v.shipmentInBlockChain.status__c}"
+                    />
+
+                    <lightning:input aura:id="shipmentform" label="Contract"
+                                     name="contract" disabled="true"
+                                     value="{!v.shipmentInBlockChain.contract__c}"
+                    />
+
+
+                </form>
+                </aura:if>
+
+                <aura:if isTrue="{!and(v.shipmentInBlockChain.ExternalId != null,v.shipmentInBlockChain.status__c=='CREATED')}">
+                    <lightning:button label="Set To PACKED"
                                       class="slds-m-top--medium"
                                       variant="brand"
-                                      onclick="{!c.clickCreate}"/>
-                </form>
+                                      onclick="{!c.shipmentPacked}"/>
+                </aura:if>
+                <aura:if isTrue="{!and(v.shipmentInBlockChain.ExternalId != null,v.shipmentInBlockChain.status__c=='PACKED')}">
+                    <lightning:button label="Set To IN-TRANSIT"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.shipmentInTransit}"/>
+                </aura:if>
+                <aura:if isTrue="{!and(v.shipmentInBlockChain.ExternalId != null,v.shipmentInBlockChain.status__c=='IN_TRANSIT')}">
+                    <lightning:button label="Set To ARRIVED"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.shipmentReceived}"/>
+                </aura:if>
+
                 <!-- / CREATE NEW EXPENSE FORM -->
 
                 <!-- / BOXED AREA -->

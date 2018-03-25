@@ -1,10 +1,12 @@
 ({
     doInit: function(component, event) {
 
+
         console.log('in BCAddContract doInit()');
         //component.set("v.newGrower.city__c",mycountry);
     },
     handleRecordUpdated: function(component, event) {
+
 
         var contractRecordId = component.get("v.simpleRecord.Id");
         var contractName = component.get("v.simpleRecord.Name");
@@ -39,7 +41,6 @@
         var newContract = component.get("v.newContract");
         console.log("Create contract: " + JSON.stringify(newContract));
         helper.createContract(component, newContract);
-
 
     }
 

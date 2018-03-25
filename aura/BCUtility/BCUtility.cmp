@@ -7,10 +7,10 @@
 
 
     <!-- NEW Contract2 FORM -->
-    <lightning:layout >
-        <lightning:layoutItem padding="around-small" size="6">
+    <lightning:card title="Clear All BlockChain Data" iconName="custom:custom50">
 
-            <!-- CREATE NEW EXPENSE -->
+
+    <!-- CREATE NEW EXPENSE -->
             <div aria-labelledby="newcontractform">
 
 
@@ -30,7 +30,7 @@
 
 
 
-                    <lightning:button label="DELETE ALL BC ENTRIES - CAUTION!!"
+                    <lightning:button label="Go ahead, do it!, but proceed with CAUTION!!"
                                       class="slds-m-top--medium"
                                       variant="brand"
                                       onclick="{!c.handleClick}"/>
@@ -44,8 +44,7 @@
             </div>
             <!-- / CREATE NEW EXPENSE -->
 
-        </lightning:layoutItem>
-    </lightning:layout>
+    </lightning:card>
     <!-- / NEW EXPENSE FORM -->
 
 </aura:component>

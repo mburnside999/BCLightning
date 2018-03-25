@@ -8,15 +8,16 @@
 <table class="slds-table slds-table_bordered slds-table_cell-buffer">
   <thead>
     <tr class="slds-text-title_caps">
-     <th scope="col">
-        <div class="slds-truncate" title="Shipment">Shipment</div>
-      </th>
+
       <th scope="col">
         <div class="slds-truncate" title="Timestamp">Timestamp</div>
       </th>
       <th scope="col">
-        <div class="slds-truncate" title="Temperature">Temp</div>
-      </th> 
+        <div class="slds-truncate" title="Temperature">Centigrade</div>
+      </th>
+        <th scope="col">
+            <div class="slds-truncate" title="Shipment">Shipment</div>
+        </th>
     </tr>
   </thead>
   <tbody>          
@@ -25,15 +26,17 @@
           
               <tr>
      
-      <td data-label="Shipment">
-        <div class="slds-truncate" title="Shipment">{!temperaturereading.shipmentFK__c}</div>
-      </td>
+
        <td data-label="Timestamp">
         <div class="slds-truncate" title="Timestamp">{!temperaturereading.timestamp__c}</div>
       </td>
       <td data-label="Temperature">
         <div class="slds-truncate" title="Temp">{!temperaturereading.centigrade__c}</div>
       </td>
+
+                  <td data-label="Shipment">
+                      <div class="slds-truncate" title="Shipment">{!temperaturereading.shipmentFK__c}</div>
+                  </td>
             
             </tr>
        </aura:iteration>
