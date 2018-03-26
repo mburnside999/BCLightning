@@ -32,7 +32,7 @@
 
                     <lightning:button label="Go ahead, do it!, but proceed with CAUTION!!"
                                       class="slds-m-top--medium"
-                                      variant="brand"
+                                      variant="destructive"
                                       onclick="{!c.handleClick}"/>
 
 

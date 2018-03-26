@@ -52,60 +52,84 @@ public with sharing class BCShipmentController {
 
     }
     @AuraEnabled
-    public static String generateTemperatures(String shipmentid) {
-Double d;
+    public static String generateTemperatures(String shipmentid, Integer loopcount, Boolean inrange) {
+
+
+        BCShipment__x shipment=[select contract__c from BCShipment__x where ExternalId=:shipmentid limit 1];
+        String contract=shipment.contract__c;
+
+        BCContract2__x bccontract= [select  id,maxTemperature__c,minTemperature__c from BCContract2__x where ExternalId=:contract limit 1 ];
+
+        System.debug('max tempersture '+ bccontract.maxTemperature__c);
+        System.debug('min tempersture '+ bccontract.minTemperature__c);
+
+        Integer diff=integer.valueOf(bccontract.maxTemperature__c)-integer.valueOf(bccontract.minTemperature__c);
+        System.debug(integer.valueOf(bccontract.maxTemperature__c)-integer.valueOf(bccontract.minTemperature__c));
+
+
+        Double d;
         Decimal dc;
         String str_dc;
 
-        DateTime t = DateTime.now();
-        DateTime t_minus_30=t.addMinutes(-30);
-        DateTime t_minus_60=t.addMinutes(-60);
-        DateTime t_minus_90=t.addMinutes(-90);
-        DateTime t_minus_120=t.addMinutes(-120);
+        String str_t;
+        try {
+            for (Integer i = 0; i < loopcount; i++) {
 
+                DateTime t = DateTime.now().addMinutes(-30 * i);
+                d = Math.random();
+                if (inrange) {
+                    dc = Decimal.valueOf(bccontract.minTemperature__c) + Decimal.valueOf(d * diff);
+                } else {
 
-        String str_t=t.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
-        String str_t_minus_30=t_minus_30.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
-        String str_t_minus_60=t_minus_60.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
-        String str_t_minus_90=t_minus_90.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
-        String str_t_minus_120=t_minus_120.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
+                    dc = Decimal.valueOf(bccontract.maxTemperature__c) + Decimal.valueOf(d * 5);
+                }
 
+                dc = dc.setScale(1);
+                str_dc = dc.toPlainString();
+                str_t = t.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss.SSSZ');
+                System.debug('processing loop '+i);
+                System.debug('str_dc= '+str_dc+ ' str_t='+str_t);
+                BCAddTemperatureReading(shipmentid, str_dc, str_t);
+            }
 
+        }  catch (Exception e) {
+            throw e;
+        }
         //BCAddTemperatureReading(shipmentid,"1.0") ;
-try {
+/*try {
     d = Math.random();
-    dc = Decimal.valueOf(d * 10);
+    dc = Decimal.valueOf(bccontract.minTemperature__c)+Decimal.valueOf(d * diff);
     dc = dc.setScale(1);
     str_dc = dc.toPlainString();
     BCAddTemperatureReading(shipmentid, str_dc, str_t);
 
     d = Math.random();
-    dc = Decimal.valueOf(d * 10);
+    dc = Decimal.valueOf(bccontract.minTemperature__c)+Decimal.valueOf(d * diff);
     dc = dc.setScale(1);
     str_dc = dc.toPlainString();
     BCAddTemperatureReading(shipmentid, str_dc, str_t_minus_30);
 
     d = Math.random();
-    dc = Decimal.valueOf(d * 10);
+    dc = Decimal.valueOf(bccontract.minTemperature__c)+Decimal.valueOf(d * diff);
     dc = dc.setScale(1);
     str_dc = dc.toPlainString();
     BCAddTemperatureReading(shipmentid, str_dc, str_t_minus_60);
 
     d = Math.random();
-    dc = Decimal.valueOf(d * 10);
+    dc = Decimal.valueOf(bccontract.minTemperature__c)+Decimal.valueOf(d * diff);
     dc = dc.setScale(1);
     str_dc = dc.toPlainString();
     BCAddTemperatureReading(shipmentid, str_dc, str_t_minus_90);
 
     d = Math.random();
-    dc = Decimal.valueOf(d * 10);
+    dc = Decimal.valueOf(bccontract.minTemperature__c)+Decimal.valueOf(d * diff);
     dc = dc.setScale(1);
     str_dc = dc.toPlainString();
     BCAddTemperatureReading(shipmentid, str_dc, str_t_minus_120);
 } catch (Exception e) {
      throw e;
 
-}
+}*/
 
         return 'Done';
 

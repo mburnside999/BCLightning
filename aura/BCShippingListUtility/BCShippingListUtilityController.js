@@ -29,13 +29,15 @@
         var shipmentid = component.get("v.shipmentId");
         component.set("v.result", "Working...");
         action.setParams({
-            "shipmentid": shipmentid
+            "shipmentid": shipmentid,
+            "loopcount":"5",
+            "inrange":"true"
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 console.log(response.getReturnValue);
-                //component.set("v.result", response.getReturnValue());
+                component.set("v.result", response.getReturnValue());
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
                     "title": "Success!",
@@ -46,11 +48,13 @@
                 component.set("v.isOpen", false);
             } else {
                 var errorEvent = $A.get("e.force:showToast");
+
+
                 errorEvent.setParams({
                     "title": "Blockchain Error!",
                     "type": "error",
                     "mode": "sticky",
-                    "message": "Error adding temperatures"
+                    "message": response.getReturnValue
                 });
                 errorEvent.fire();
                 component.set("v.isOpen", false);
@@ -96,5 +100,46 @@
 
             });
             $A.enqueueAction(action);
-        }
+        },
+        sendAnOutOfRangeMaxTemperature: function(component, event, helper) {
+                    // Display alert message on the click on the "Like and Close" button from Model Footer
+                    // and set set the "isOpen" attribute to "False for close the model Box.
+                    console.log('in sendAnOutOfRangeMaxTemperature');
+                            var action = component.get("c.generateTemperatures");
+                            var shipmentid = component.get("v.shipmentId");
+                            component.set("v.result", "Working...");
+                            action.setParams({
+                                "shipmentid": shipmentid,
+                                "loopcount":"1",
+                                "inrange":"false"
+                            });
+                    action.setCallback(this, function(response) {
+                        var state = response.getState();
+                        if (state === "SUCCESS") {
+                            console.log(response.getReturnValue);
+                            //component.set("v.result", response.getReturnValue());
+                            var toastEvent = $A.get("e.force:showToast");
+                            toastEvent.setParams({
+                                "title": "Success!",
+                                "type": "success",
+                                "message": "Successfully added Max Temperature to Blockchain."
+                            });
+                            toastEvent.fire();
+                            component.set("v.isOpen", false);
+                        } else {
+                            console.log(response.getReturnValue);
+                            var errorEvent = $A.get("e.force:showToast");
+                            errorEvent.setParams({
+                                "title": "Blockchain Error!",
+                                "type": "error",
+                                "mode": "sticky",
+                                "message": "Error adding temperature"
+                            });
+                            errorEvent.fire();
+                            component.set("v.isOpen", false);
+                        }
+
+                    });
+                    $A.enqueueAction(action);
+                }
 })
